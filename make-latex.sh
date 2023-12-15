@@ -25,7 +25,7 @@ pandoc text/intro.txt --lua-filter=epigraph.lua --to markdown | pandoc --top-lev
 for filename in text/ch*.txt; do
       [ -e "$filename" ] || continue
       echo "  $filename -> latex/$(basename "$filename" .txt).tex..."
-      pandoc --lua-filter=extras.lua "$filename" --to markdown | pandoc --lua-filter=extras.lua --to markdown | pandoc --lua-filter=epigraph.lua --to markdown | pandoc --lua-filter=figure.lua --to markdown | pandoc --lua-filter=contribution.lua --to markdown | pandoc --filter pandoc-fignos --to markdown | pandoc --metadata-file=meta.yml --top-level-division=chapter --citeproc --bibliography=bibliography/"$(basename "$filename" .txt).bib" --reference-location=section --to latex > latex/"$(basename "$filename" .txt).tex"    
+      pandoc --lua-filter=extras.lua "$filename" --to markdown | pandoc --lua-filter=extras.lua --to markdown | pandoc --lua-filter=epigraph.lua --to markdown | pandoc --lua-filter=figure.lua --to markdown | pandoc --lua-filter=modification.lua --to markdown | pandoc --filter pandoc-fignos --to markdown | pandoc --metadata-file=meta.yml --top-level-division=chapter --citeproc --bibliography=bibliography/"$(basename "$filename" .txt).bib" --reference-location=section --to latex > latex/"$(basename "$filename" .txt).tex"    
    done
 
 echo "  text/epi.txt -> latex/epi.tex..."
@@ -41,7 +41,7 @@ echo " Merging the .tex files into a single one. Please standby, it will take a 
 pandoc -s latex/*.tex -o book/book.tex
 
 echo "  Creating the .pdf book from the .tex files. Please wait."
-pandoc -N --quiet --variable "geometry=margin=1.2in" --variable mainfont="MesloLGS NF Regular" --variable sansfont="MesloLGS NF Regular" --variable monofont="MesloLGS NF Regular" --variable fontsize=12pt --variable version=2.0 book/book.tex  --pdf-engine=xelatex --toc -o book/book.pdf
+pandoc -N --quiet --variable "geometry=margin=1.2in" --variable mainfont="Times New Roman" --variable sansfont="Times New Roman" --variable monofont="Times New Roman" --variable fontsize=12pt --variable version=2.0 book/book.tex  --pdf-engine=xelatex --toc -o book/book.pdf
 
 echo "  The creation of the .tex & .pdf file has finished!  ;)"
 
